@@ -20,30 +20,28 @@ public class StudentService {
 //   C - create
 
     public Student findStudent(long id) {
-//        if (students.containsKey(id)) {
-//            return students.get(id);
-//        }
-//        return null;
-
-        return students.get(id);
+        if (students.containsKey(id)) {
+            return students.get(id);
+        }
+        return null;
     }
 //   R - read
 
     public Student updateStudent(Student student) {
-//        if (students.containsKey(student.getId())) {
-//            students.put(student.getId(), student);
-//            return student;
-//        } else {
-//            return null;
-//        }
-
-        students.put(student.getId(), student);
-        return student;
+        if (students.containsKey(student.getId())) {
+            students.put(student.getId(), student);
+            return student;
+        } else {
+            return null;
+        }
     }
 //   U - update
 
     public Student deleteStudent(long id) {
-        return students.remove(id);
+        if (students.containsKey(id)) {
+            return students.remove(id);
+        }
+        return null;
     }
 //  D -  delete
 

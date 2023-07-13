@@ -2,7 +2,6 @@ package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
-import ru.hogwarts.school.model.Student;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,18 +21,27 @@ public class FacultyService {
 //   C - create
 
     public Faculty findFaculty(long id) {
-        return faculties.get(id);
+        if (faculties.containsKey(id)) {
+            return faculties.get(id);
+        }
+        return null;
     }
 //   R - read
 
     public Faculty updateFaculty(Faculty faculty) {
-        faculties.put(faculty.getId(), faculty);
-        return faculty;
+        if (faculties.containsKey(faculty.getId())) {
+            faculties.put(faculty.getId(), faculty);
+            return faculty;
+        }
+        return null;
     }
 //   U - update
 
     public Faculty deleteFaculty(long id) {
-        return faculties.remove(id);
+        if (faculties.containsKey(id)) {
+            return faculties.remove(id);
+        }
+        return null;
     }
 //  D -  delete
 

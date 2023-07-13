@@ -18,14 +18,12 @@ public class StudentController {
     }
 
     @GetMapping("{id}") // GET
-    public Student getStudentInfo(@PathVariable Long id) {
-//        Student student = studentService.findStudent(id);
-//        if (student == null) {
-//            ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-//        }
-//        return ResponseEntity.ok(student);
-
-        return studentService.findStudent(id);
+    public ResponseEntity<Student> getStudentInfo(@PathVariable Long id) {
+        Student student = studentService.findStudent(id);
+        if (student == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(student);
     }
 
     @PostMapping // POST
@@ -34,25 +32,21 @@ public class StudentController {
     }
 
     @PutMapping // PUT
-    public Student updateStudent(@RequestBody Student student) {
-//        Student studentUPD = studentService.updateStudent(student);
-//        if (studentUPD == null) {
-//            ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//        }
-//        return ResponseEntity.ok(studentUPD);
-
-        return studentService.updateStudent(student);
+    public ResponseEntity<Student> updateStudent(@RequestBody Student student) {
+        Student studentUPD = studentService.updateStudent(student);
+        if (studentUPD == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(studentUPD);
     }
 
     @DeleteMapping("{id}") // DELETE
-    public Student deleteStudent(@PathVariable Long id) {
-//        Student student = studentService.deleteStudent(id);
-//        if (student == null) {
-//            ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-//        }
-//        return ResponseEntity.ok(student);
-
-        return studentService.deleteStudent(id);
+    public ResponseEntity<Student> deleteStudent(@PathVariable Long id) {
+        Student student = studentService.deleteStudent(id);
+        if (student == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(student);
     }
 
     @GetMapping("byAge/{age}")
