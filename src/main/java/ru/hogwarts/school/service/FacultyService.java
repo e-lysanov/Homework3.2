@@ -2,56 +2,42 @@ package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.repository.FacultyRepository;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 
 @Service
 public class FacultyService {
-    private final HashMap<Long, Faculty> faculties = new HashMap<>();
-    private long lastID = 0;
 
+    private FacultyRepository facultyRepository;
+
+    public FacultyService(FacultyRepository facultyRepository) {
+        this.facultyRepository = facultyRepository;
+    }
 
     public Faculty createFaculty(Faculty faculty) {
-        faculty.setId(++lastID);
-        faculties.put(lastID, faculty);
-        return faculty;
+        return facultyRepository.save(faculty);
     }
 //   C - create
 
     public Faculty findFaculty(long id) {
-        if (faculties.containsKey(id)) {
-            return faculties.get(id);
-        }
-        return null;
+        return facultyRepository.findById(id).get();
     }
 //   R - read
 
     public Faculty updateFaculty(Faculty faculty) {
-        if (faculties.containsKey(faculty.getId())) {
-            faculties.put(faculty.getId(), faculty);
-            return faculty;
-        }
-        return null;
+        return facultyRepository.save(faculty);
     }
 //   U - update
 
-    public Faculty deleteFaculty(long id) {
-        if (faculties.containsKey(id)) {
-            return faculties.remove(id);
-        }
-        return null;
+    public void deleteFaculty(long id) {
+        facultyRepository.deleteById(id);
     }
 //  D -  delete
 
     public Collection<Faculty> filterFacultiesByColor(String color) {
-        Collection<Faculty> filteredFaculties = new ArrayList<>();
-        for (long i = 1; i <= lastID; i++) {
-            if (faculties.get(i).getColor().equals(color)) {
-                filteredFaculties.add(faculties.get(i));
-            }
-        }
+        Collection<Faculty> filteredFaculties = facultyRepository.findAll();
+        filteredFaculties.removeIf(faculty -> !faculty.getColor().equals(color));
         return filteredFaculties;
     }
 }

@@ -2,56 +2,42 @@ package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.StudentRepository;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 
 @Service
 public class StudentService {
-    private  final HashMap<Long, Student> students = new HashMap<>();
-    private long lastID = 0;
+
+    private StudentRepository studentRepository;
+
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
 
     public Student createStudent(Student student) {
-        student.setId(++lastID);
-        students.put(lastID, student);
-        return student;
+        return studentRepository.save(student);
     }
 //   C - create
 
     public Student findStudent(long id) {
-        if (students.containsKey(id)) {
-            return students.get(id);
-        }
-        return null;
+        return studentRepository.findById(id).get();
     }
 //   R - read
 
     public Student updateStudent(Student student) {
-        if (students.containsKey(student.getId())) {
-            students.put(student.getId(), student);
-            return student;
-        } else {
-            return null;
-        }
+        return studentRepository.save(student);
     }
 //   U - update
 
-    public Student deleteStudent(long id) {
-        if (students.containsKey(id)) {
-            return students.remove(id);
-        }
-        return null;
+    public void deleteStudent(long id) {
+        studentRepository.deleteById(id);
     }
 //  D -  delete
 
     public Collection<Student> filterStudentsByAge(int age) {
-        Collection<Student> filteredStudents = new ArrayList<>();
-        for (long i = 1; i <= lastID; i++) {
-            if (students.get(i).getAge() == age) {
-                filteredStudents.add(students.get(i));
-            }
-        }
+        Collection<Student> filteredStudents = studentRepository.findAll();
+        filteredStudents.removeIf(student -> student.getAge() != age);
         return filteredStudents;
     }
 }
