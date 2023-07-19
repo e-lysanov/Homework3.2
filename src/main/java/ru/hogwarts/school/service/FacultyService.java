@@ -36,8 +36,6 @@ public class FacultyService {
 //  D -  delete
 
     public Collection<Faculty> filterFacultiesByColor(String color) {
-        Collection<Faculty> filteredFaculties = facultyRepository.findAll();
-        filteredFaculties.removeIf(faculty -> !faculty.getColor().equals(color));
-        return filteredFaculties;
+        return facultyRepository.findFacultiesByColorIgnoreCase(color);
     }
 }

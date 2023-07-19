@@ -36,8 +36,6 @@ public class StudentService {
 //  D -  delete
 
     public Collection<Student> filterStudentsByAge(int age) {
-        Collection<Student> filteredStudents = studentRepository.findAll();
-        filteredStudents.removeIf(student -> student.getAge() != age);
-        return filteredStudents;
+        return studentRepository.findStudentsByAge(age);
     }
 }
