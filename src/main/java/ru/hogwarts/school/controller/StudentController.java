@@ -50,4 +50,9 @@ public class StudentController {
     public Collection<Student> filterStudentsByAge(@PathVariable int age) {
         return studentService.filterStudentsByAge(age);
     }
+
+    @GetMapping("byAgeBetween")
+    public Collection<Student> getStudentsByAgeBetween(@RequestParam int fromAge, @RequestParam int toAge) {
+        return studentService.getStudentsByAgeBetween(fromAge, toAge);
+    }
 }

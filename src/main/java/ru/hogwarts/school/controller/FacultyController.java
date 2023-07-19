@@ -50,4 +50,21 @@ public class FacultyController {
     public Collection<Faculty> filterFacultiesByColor(@PathVariable String color) {
         return facultyService.filterFacultiesByColor(color);
     }
+
+//    @GetMapping("byNameOrColor/")
+//    public ResponseEntity getFacultiesByNameOrColor(@RequestParam(required = false) String name,
+//                                                    @RequestParam(required = false) String color) {
+//        if (name != null && !name.isBlank()) {
+//            return ResponseEntity.ok(facultyService.filterFacultiesByName(name));
+//        } else if (color != null && !color.isBlank()) {
+//            return ResponseEntity.ok(facultyService.filterFacultiesByColor(color));
+//        }
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//    }
+
+    @GetMapping("byNameOrColor/")
+    public ResponseEntity getFacultiesByNameOrColor(@RequestParam(required = false) String name,
+                                                    @RequestParam(required = false) String color) {
+        return ResponseEntity.ok(facultyService.findFacultiesByNameOrColor(name, color));
+    }
 }
