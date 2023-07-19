@@ -44,8 +44,7 @@ public class StudentService {
         return studentRepository.findStudentsByAgeBetween(fromAge, toAge);
     }
 
-//    public Faculty getFacultyOfStudent(long id) {
-//        System.out.println("kod zapustilsya");
-//        return studentRepository.getById(id).getFaculty();
-//    }
+    public Faculty getFacultyOfStudent(long id) {
+        return studentRepository.getById(id).getFaculty();
+    }
 }

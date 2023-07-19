@@ -57,8 +57,8 @@ public class StudentController {
         return studentService.getStudentsByAgeBetween(fromAge, toAge);
     }
 
-//    @GetMapping("getFacultyByID/{id}")
-//    public Faculty getFacultyOfStudent(@PathVariable Long id) {
-//        return studentService.getFacultyOfStudent(id);
-//    }
+    @GetMapping("getFacultyByID/{id}")
+    public Faculty getFacultyOfStudent(@PathVariable Long id) {
+        return studentService.getFacultyOfStudent(id);
+    }
 }
