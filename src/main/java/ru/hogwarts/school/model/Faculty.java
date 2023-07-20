@@ -1,5 +1,6 @@
 package ru.hogwarts.school.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -7,6 +8,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
+@JsonIgnoreProperties(value = {"students"})
 public class Faculty {
 
     @Id
