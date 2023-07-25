@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.AvatarRepository;
+import ru.hogwarts.school.repository.StudentRepository;
 
 import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
@@ -24,18 +25,18 @@ public class AvatarService {
     @Value("${path.to.avatars.folder}")
     private String avatarsDir;
 
-    private final StudentService studentService;
+    private final StudentRepository studentRepository;
     private final AvatarRepository avatarRepository;
 
-    public AvatarService(StudentService studentService, AvatarRepository avatarRepository) {
-        this.studentService = studentService;
+    public AvatarService(StudentRepository studentRepository, AvatarRepository avatarRepository) {
+        this.studentRepository = studentRepository;
         this.avatarRepository = avatarRepository;
     }
 
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
-        Student student = studentService.findStudent(studentId);
+        Student student = studentRepository.getById(studentId);
 
-        Path filePath = Path.of(avatarsDir, studentId + "." + getExtension(avatarFile.getOriginalFilename()));
+        Path filePath = Path.of(avatarsDir, student + "." + getExtension(avatarFile.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
         try (
@@ -47,14 +48,10 @@ public class AvatarService {
             bis.transferTo(bos);
         }
 
-//        Avatar avatar = new Avatar();
-//        if (findAvatar(studentId) != null) { // TODO переделать проверку на наличие изменяемого аватара!!!
-//            avatar = findAvatar(studentId);
-//        }
-
 //        Avatar avatar = avatarRepository.findAvatarByStudentId(studentId).orElseGet(Avatar::new);
 
         Avatar avatar = findAvatar(studentId);
+//        Avatar avatar = new Avatar();
         avatar.setStudent(student);
         avatar.setFilePath(filePath.toString());
         avatar.setFileSize(avatarFile.getSize());
@@ -64,11 +61,7 @@ public class AvatarService {
         avatarRepository.save(avatar);
     }
 
-//    public Avatar findAvatar(Long studentId) {
-//        return avatarRepository.findAvatarByStudentId(studentId).orElseGet(Avatar::new);
-//    }
-
-    public Avatar findAvatar(long studentId) {
+    public Avatar findAvatar(Long studentId) {
 //        return avatarRepository.findAvatarByStudentId(studentId).orElseThrow();
         return avatarRepository.findAvatarByStudentId(studentId).orElse(new Avatar());
     }
