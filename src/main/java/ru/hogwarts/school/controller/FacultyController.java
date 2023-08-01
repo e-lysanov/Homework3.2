@@ -53,7 +53,7 @@ public class FacultyController {
     }
 
 
-    @GetMapping("byNameOrColor/")
+    @GetMapping("byNameOrColor")
     public ResponseEntity getFacultiesByNameOrColor(@RequestParam(required = false) String name,
                                                     @RequestParam(required = false) String color) {
         return ResponseEntity.ok(facultyService.findFacultiesByNameOrColor(name, color));
