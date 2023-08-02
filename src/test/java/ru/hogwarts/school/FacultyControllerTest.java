@@ -8,7 +8,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import ru.hogwarts.school.controller.FacultyController;
 import ru.hogwarts.school.model.Faculty;
-import ru.hogwarts.school.model.Student;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class FacultyControllerTest {
@@ -56,6 +55,10 @@ public class FacultyControllerTest {
         Assertions
                 .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/faculty/31", String.class))
                 .contains("UPD");
+
+        Assertions
+                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/faculty/31", Faculty.class))
+                .isEqualTo(facultyUPD);
     }
 
     @Test
@@ -64,6 +67,11 @@ public class FacultyControllerTest {
         Assertions
                 .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/faculty/100", String.class))
                 .doesNotContain("id");
+
+        Faculty nullFaculty = new Faculty();
+        Assertions
+                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/faculty/100", Faculty.class))
+                .isEqualTo(nullFaculty);
     }
 
     @Test

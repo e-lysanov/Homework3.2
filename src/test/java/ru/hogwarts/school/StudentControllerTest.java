@@ -1,6 +1,5 @@
 package ru.hogwarts.school;
 
-import net.minidev.json.JSONObject;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,22 +56,15 @@ public class StudentControllerTest {
         studentUPD.setAge(88);
         studentUPD.setId(39L);
 
-//        JSONObject studentObject;
-//        studentObject = new JSONObject();
-//        studentObject.put("id", 39L);
-//        studentObject.put("name", "testUPD");
-//        studentObject.put("age", 88);
-//        System.out.println(studentObject);
-
         this.restTemplate.put("http://localhost:" + port + "/student", studentUPD, String.class);
-
-//        Assertions
-//                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/39", String.class))
-//                .isEqualTo(studentObject.toJSONString());
 
         Assertions
                 .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/39", String.class))
                 .contains("UPD");
+
+        Assertions
+                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/39", Student.class))
+                .isEqualTo(studentUPD);
     }
 
     @Test
@@ -81,6 +73,11 @@ public class StudentControllerTest {
         Assertions
                 .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/100", String.class))
                 .doesNotContain("id");
+
+        Student nullStudent = new Student();
+        Assertions
+                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/100", Student.class))
+                .isEqualTo(nullStudent);
     }
 
     @Test
