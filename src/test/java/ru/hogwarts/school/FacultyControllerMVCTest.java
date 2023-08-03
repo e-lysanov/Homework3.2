@@ -171,7 +171,9 @@ public class FacultyControllerMVCTest {
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/faculty/byColor/" + color)) //send
-                .andExpect(status().isOk());//receive
+                .andExpect(status().isOk())//receive
+                .andExpect(jsonPath("$[0].color").value(color))
+                .andExpect(jsonPath("$[1].color").value(color));
     }
 
     @Test
@@ -202,10 +204,13 @@ public class FacultyControllerMVCTest {
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/faculty/byNameOrColor?color=" + color)) //send
                 .andExpect(status().isOk());//receive
+//                .andExpect(jsonPath("$[1].color").value(color));
+//                .andExpect(jsonPath("$[2].color").value(color));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/faculty/byNameOrColor?name=" + name)) //send
                 .andExpect(status().isOk());//receive
+//                .andExpect(jsonPath("$[1].name").value(name));
     }
 
     @Test
@@ -240,6 +245,8 @@ public class FacultyControllerMVCTest {
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/faculty/studentsByID/" + id)) //send
-                .andExpect(status().isOk());//receive
+                .andExpect(status().isOk())//receive
+                .andExpect(jsonPath("$[0].name").value("firstStudent"))
+                .andExpect(jsonPath("$[1].name").value("secondStudent"));
     }
 }

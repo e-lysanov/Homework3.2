@@ -177,8 +177,10 @@ public class StudentControllerMVCTest {
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/student/byAge/" + age)) //send
-                .andExpect(status().isOk());//receive
-//                .andExpect(jsonPath("$.age").value("10"));
+                .andExpect(status().isOk())//receive
+                .andExpect(jsonPath("$[0].age").value("10"))
+                .andExpect(jsonPath("$[1].age").value("10"));
+
     }
 
     @Test
@@ -204,7 +206,9 @@ public class StudentControllerMVCTest {
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/student/byAgeBetween?fromAge=" + fromAge + "&toAge=" + toAge)) //send
-                .andExpect(status().isOk());//receive
+                .andExpect(status().isOk())//receive
+                .andExpect(jsonPath("$[0].name").value("firstStudent"))
+                .andExpect(jsonPath("$[1].name").value("secondStudent"));
     }
 
     @Test

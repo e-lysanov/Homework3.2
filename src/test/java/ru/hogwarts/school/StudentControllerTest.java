@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import ru.hogwarts.school.controller.StudentController;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -27,9 +28,16 @@ public class StudentControllerTest {
 
     @Test
     public void testGetStudentInfo() throws Exception {
+        Student student = new Student();
+        student.setName("test");
+        student.setAge(77);
+        student.setId(1L);
+
+        this.restTemplate.postForObject("http://localhost:" + port + "/student", student, String.class);
+
         Assertions
-                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/" + 1, String.class))
-                .isNotNull();
+                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/" + 1, Student.class))
+                .isEqualTo(student);
     }
 
     @Test
@@ -41,12 +49,6 @@ public class StudentControllerTest {
         Assertions
                 .assertThat(this.restTemplate.postForObject("http://localhost:" + port + "/student", student, String.class))
                 .isNotNull();
-
-//        Assertions
-//                .assertThat(this.restTemplate.delete("http://localhost:" + port + "/student/" + student.getId(), String.class);)
-//                .isNotNull();
-
-//        this.restTemplate.delete("http://localhost:" + port + "/student/" + student.getId());
     }
 
     @Test
@@ -54,16 +56,16 @@ public class StudentControllerTest {
         Student studentUPD = new Student();
         studentUPD.setName("testUPD");
         studentUPD.setAge(88);
-        studentUPD.setId(39L);
+        studentUPD.setId(1L);
 
         this.restTemplate.put("http://localhost:" + port + "/student", studentUPD, String.class);
 
         Assertions
-                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/39", String.class))
+                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/1", String.class))
                 .contains("UPD");
 
         Assertions
-                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/39", Student.class))
+                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/1", Student.class))
                 .isEqualTo(studentUPD);
     }
 
@@ -96,8 +98,28 @@ public class StudentControllerTest {
 
     @Test
     public void testGetFacultyOfStudent() throws Exception {
+//        Faculty faculty = new Faculty();
+//        faculty.setColor("color");
+//        faculty.setName("name");
+//        faculty.setId(1L);
+
+//        Student student = new Student();
+//        student.setName("test");
+//        student.setAge(77);
+//        student.setFaculty(faculty);
+
+//        this.restTemplate.postForObject("http://localhost:" + port + "/student", student, String.class);
+
+//        Assertions
+//                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/getFacultyByID/1", Faculty.class))
+//                .isEqualTo(faculty);
+
+//        Assertions
+//                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/getFacultyByID/1", Faculty.class))
+//                .isNull();
+
         Assertions
-                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/getFacultyByID/1", String.class))
+                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/getFacultyByID/100", String.class))
                 .isNotNull();
     }
 }
