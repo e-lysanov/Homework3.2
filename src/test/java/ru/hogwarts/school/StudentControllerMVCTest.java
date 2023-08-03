@@ -9,9 +9,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import ru.hogwarts.school.controller.AvatarController;
 import ru.hogwarts.school.controller.StudentController;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
@@ -24,7 +22,6 @@ import ru.hogwarts.school.service.StudentService;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -146,23 +143,15 @@ public class StudentControllerMVCTest {
         String name = "testName";
         int age = 10;
 
-        JSONObject studentObject = new JSONObject();
-        studentObject.put("name", name);
-        studentObject.put("age", age);
-
         Student student = new Student();
         student.setId(id);
         student.setName(name);
         student.setAge(age);
 
-        when(studentRepository.save(any(Student.class))).thenReturn(student);
         when(studentRepository.findById(any(Long.class))).thenReturn(Optional.of(student));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .delete("/student/" + id) //send
-                        .content(studentObject.toString())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
+                        .delete("/student/" + id)) //send
                 .andExpect(status().isOk()); //receive
     }
 
@@ -226,7 +215,6 @@ public class StudentControllerMVCTest {
 
         String color = "testColor";
         Long idOfFaculty = 10L;
-
 
         Faculty faculty = new Faculty();
         faculty.setColor(color);
