@@ -10,6 +10,7 @@ public class Student {
 
     @Id
     @GeneratedValue
+//            (strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private int age;
@@ -18,6 +19,9 @@ public class Student {
     @JoinColumn(name = "faculty_id")
     @JsonBackReference
     private Faculty faculty;
+
+    public Student() {
+    }
 
     public Long getId() {
         return id;

@@ -13,6 +13,7 @@ public class Faculty {
 
     @Id
     @GeneratedValue
+//            (strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String color;
@@ -21,6 +22,8 @@ public class Faculty {
     @JsonManagedReference
     private Collection<Student> students;
 
+    public Faculty() {
+    }
 
     public Long getId() {
         return id;
