@@ -62,9 +62,50 @@ public class AvatarController {
         }
     }
 
+//    @GetMapping(value = "/getAllAvatars")
+//    public void getAllAvatars(@RequestParam("page") Integer pageNumber, @RequestParam("size") Integer pageSize) {
+//        List<Avatar> avatars = avatarService.getAllAvatars(pageNumber, pageSize);
+//
+//        for (int i = 0; i < avatars.size(); i++) {
+//            Long id = avatars.get(i).getId();
+//            downloadAvatar(id);
+//        }
+//    }
+
+//    @GetMapping(value = "/getAllAvatars")
+//    public ResponseEntity<byte[]> getAllAvatars(@RequestParam("page") Integer pageNumber, @RequestParam("size") Integer pageSize) {
+//        List<Avatar> avatars = avatarService.getAllAvatars(pageNumber, pageSize);
+//
+//        for (int i = 0; i < avatars.size(); i++) {
+//            HttpHeaders headers = new HttpHeaders();
+//            headers.setContentType(MediaType.parseMediaType(avatars.get(i).getMediaType()));
+//            headers.setContentLength(avatars.get(i).getData().length);
+//            return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatars.get(i).getData());
+//        }
+//        return ResponseEntity.status(HttpStatus.OK).body(avatars.get(1).getData());
+//    }
+
+//    @GetMapping(value = "/getAllAvatars")
+//    public ResponseEntity<List<Avatar>> getAllAvatars(@RequestParam("page") Integer pageNumber, @RequestParam("size") Integer pageSize) {
+//        List<Avatar> avatars = avatarService.getAllAvatars(pageNumber, pageSize);
+//        return ResponseEntity.ok(avatars);
+
+//        for (int i = 0; i < avatars.size(); i++) {
+//            HttpHeaders headers = new HttpHeaders();
+//            headers.setContentType(MediaType.parseMediaType(avatars.get(i).getMediaType()));
+//            headers.setContentLength(avatars.get(i).getData().length);
+//            return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatars.get(i).getData());
+//            return ResponseEntity.ok().body(avatars.get(i).getData());
+//        }
+//        return ResponseEntity.status(HttpStatus.OK).body(avatars.get(1).getData());
+
+//        List<Avatar>   byte[]
+//    }
+
     @GetMapping(value = "/getAllAvatars")
     public ResponseEntity<List<Avatar>> getAllAvatars(@RequestParam("page") Integer pageNumber, @RequestParam("size") Integer pageSize) {
         List<Avatar> avatars = avatarService.getAllAvatars(pageNumber, pageSize);
         return ResponseEntity.ok(avatars);
+
     }
 }
