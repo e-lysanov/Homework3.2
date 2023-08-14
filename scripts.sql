@@ -11,9 +11,11 @@ SELECT *
 FROM student
 WHERE name LIKE '%d%';
 
+
 SELECT *
 FROM student
 WHERE age < id;
+
 
 SELECT *
 FROM student
