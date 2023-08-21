@@ -7,8 +7,9 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 
-import java.util.Collection;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 public class FacultyService {
@@ -58,5 +59,24 @@ public class FacultyService {
     public Collection<Student> getStudentsOfFaculty(long id) {
         logger.info("Was invoked method for get students of faculty");
         return facultyRepository.getById(id).getStudents();
+    }
+
+    public String getLargestNameOfFaculty() {
+        logger.info("Was invoked method for get largest name of faculty");
+
+        int largestNameLength = facultyRepository.findAll()
+                .stream()
+                .map(Faculty::getName)
+                .mapToInt(String::length)
+                .max()
+                .getAsInt();
+
+        String largestName = facultyRepository.findAll()
+                .stream()
+                .filter(faculty -> faculty.getName().length() == largestNameLength)
+                .collect(Collectors.toList())
+                .get(0).getName();
+
+        return largestName;
     }
 }

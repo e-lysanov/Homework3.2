@@ -63,4 +63,10 @@ public class FacultyController {
     public Collection<Student> getStudentsByIdOfFaculty(@PathVariable Long id) {
         return facultyService.getStudentsOfFaculty(id);
     }
+
+    @GetMapping("largestNameOfFaculty")
+    public ResponseEntity<String> getLargestNameOfFaculty() {
+        String largestName = facultyService.getLargestNameOfFaculty();
+        return ResponseEntity.ok(largestName);
+    }
 }

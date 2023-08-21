@@ -59,21 +59,21 @@ public class StudentController {
         return studentService.getStudentsByAgeBetween(fromAge, toAge);
     }
 
-    @GetMapping("getFacultyByID/{id}")
+    @GetMapping("facultyByID/{id}")
     public ResponseEntity<Faculty> getFacultyOfStudent(@PathVariable Long id) {
         Faculty faculty = studentService.getFacultyOfStudent(id);
         return ResponseEntity.ok(faculty);
     }
 
-    @GetMapping("getAllStudentsStartsWithA")
+    @GetMapping("allStudentsStartsWithA")
     public ResponseEntity<List<String>> getAllStudentsStartsWithA() {
         List<String> names = studentService.getAllStudentsStartsWithA();
         return ResponseEntity.ok(names);
     }
 
-    @GetMapping("getAverageAgeOfAllStudents")
-    public ResponseEntity<OptionalDouble> getAverageAgeOfAllStudents() {
-        OptionalDouble averageAge = studentService.getAverageAgeOfAllStudents();
+    @GetMapping("averageAgeOfAllStudents")
+    public ResponseEntity<Double> getAverageAgeOfAllStudents() {
+        double averageAge = studentService.getAverageAgeOfAllStudents();
         return ResponseEntity.ok(averageAge);
     }
 }

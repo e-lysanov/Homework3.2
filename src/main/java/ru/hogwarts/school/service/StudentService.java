@@ -80,18 +80,21 @@ public class StudentService {
 
     public List<String> getAllStudentsStartsWithA() {
         logger.info("Was invoked method for get all names of students starts with A");
-        List<String> names = studentRepository.findAll().stream()
+        List<String> names = studentRepository.findAll()
+                .stream()
                 .filter(student -> student.getName().toUpperCase().startsWith("A"))
                 .map(student -> student.getName().toUpperCase())
                 .collect(Collectors.toList());
         return names;
     }
 
-    public OptionalDouble getAverageAgeOfAllStudents() {
+    public double getAverageAgeOfAllStudents() {
         logger.info("Was invoked method for get average age of all students");
-        OptionalDouble averageAge = studentRepository.findAll().stream()
+        double averageAge = studentRepository.findAll()
+                .stream()
                 .mapToInt(Student::getAge)
-                .average();
+                .average()
+                .getAsDouble();
         return averageAge;
     }
 }
