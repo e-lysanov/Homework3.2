@@ -10,6 +10,7 @@ import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
 @Service
@@ -84,5 +85,13 @@ public class StudentService {
                 .map(student -> student.getName().toUpperCase())
                 .collect(Collectors.toList());
         return names;
+    }
+
+    public OptionalDouble getAverageAgeOfAllStudents() {
+        logger.info("Was invoked method for get average age of all students");
+        OptionalDouble averageAge = studentRepository.findAll().stream()
+                .mapToInt(Student::getAge)
+                .average();
+        return averageAge;
     }
 }

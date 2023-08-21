@@ -9,6 +9,7 @@ import ru.hogwarts.school.service.StudentService;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.OptionalDouble;
 
 @RestController
 @RequestMapping(path = "student")
@@ -68,5 +69,11 @@ public class StudentController {
     public ResponseEntity<List<String>> getAllStudentsStartsWithA() {
         List<String> names = studentService.getAllStudentsStartsWithA();
         return ResponseEntity.ok(names);
+    }
+
+    @GetMapping("getAverageAgeOfAllStudents")
+    public ResponseEntity<OptionalDouble> getAverageAgeOfAllStudents() {
+        OptionalDouble averageAge = studentService.getAverageAgeOfAllStudents();
+        return ResponseEntity.ok(averageAge);
     }
 }
