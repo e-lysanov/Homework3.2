@@ -1,5 +1,6 @@
 package ru.hogwarts.school.service;
 
+import liquibase.pro.packaged.L;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -73,5 +75,14 @@ public class StudentService {
     public List<Student> getLastFiveStudents() {
         logger.info("Was invoked method for get last five students");
         return studentRepository.getLastFiveStudents();
+    }
+
+    public List<String> getAllStudentsStartsWithA() {
+        logger.info("Was invoked method for get all names of students starts with A");
+        List<String> names = studentRepository.findAll().stream()
+                .filter(student -> student.getName().toUpperCase().startsWith("A"))
+                .map(student -> student.getName().toUpperCase())
+                .collect(Collectors.toList());
+        return names;
     }
 }
