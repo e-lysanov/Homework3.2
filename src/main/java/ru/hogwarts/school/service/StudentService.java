@@ -126,7 +126,24 @@ public class StudentService {
         }).start();
     }
 
-    public void printStudent(List<String> students, int id) {
-        System.out.println(students.get(id));
+    public synchronized void printStudent(int id) {
+        System.out.println(studentRepository.findAll().get(id).getName() + " " + id);
+    }
+
+    public void getSixStudentsSynchronized() {
+        logger.info("Was invoked method for get six students synchronized");
+
+        printStudent(0);
+        printStudent(1);
+
+        new Thread(() -> {
+            printStudent(2);
+            printStudent(3);
+        }).start();
+
+        new Thread(() -> {
+            printStudent(4);
+            printStudent(5);
+        }).start();
     }
 }

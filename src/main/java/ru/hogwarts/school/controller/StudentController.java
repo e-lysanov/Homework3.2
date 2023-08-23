@@ -81,4 +81,9 @@ public class StudentController {
     public void getSixStudents() {
         studentService.getSixStudents();
     }
+
+    @GetMapping("sixStudentsSynchronized")
+    public void getSixStudentsSynchronized() {
+        studentService.getSixStudentsSynchronized();
+    }
 }
