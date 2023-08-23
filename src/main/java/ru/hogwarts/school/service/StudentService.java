@@ -10,6 +10,7 @@ import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
@@ -23,6 +24,9 @@ public class StudentService {
     }
 
     Logger logger = LoggerFactory.getLogger(StudentService.class);
+
+//    тут пробовал синхронизацию поблочно
+//    public Object flag = new Object();
 
     public Student createStudent(Student student) {
         logger.info("Was invoked method for create student");
@@ -126,8 +130,22 @@ public class StudentService {
         }).start();
     }
 
+//    тут пробовал синхронизацию поблочно
+//    код запускает методы параллельно, но создает "очередь": пока один поток не выполнит блок внутри метода, следующий поток не начнет выполнение
+//    public void printStudent(int id) {
+//        synchronized (flag) {
+//            System.out.println(studentRepository.findAll().get(id).getName() + " " + id);
+//        }
+//
+//        String s = "";
+//        for (int i = 0; i < 100000; i++) {
+//            s += i;
+//        }
+//    }
+
+//   тут по сути свели к однопоточному коду, методы запускаются по очереди: пока один поток не выполнит метод целиком, следующий поток метод даже не запустит
     public synchronized void printStudent(int id) {
-        System.out.println(studentRepository.findAll().get(id).getName() + " " + id);
+            System.out.println(studentRepository.findAll().get(id).getName() + " " + id);
     }
 
     public void getSixStudentsSynchronized() {
