@@ -76,4 +76,9 @@ public class StudentController {
         double averageAge = studentService.getAverageAgeOfAllStudents();
         return ResponseEntity.ok(averageAge);
     }
+
+    @GetMapping("sixStudents")
+    public void getSixStudents() {
+        studentService.getSixStudents();
+    }
 }

@@ -97,4 +97,36 @@ public class StudentService {
                 .getAsDouble();
         return averageAge;
     }
+
+    public void getSixStudents() {
+        logger.info("Was invoked method for get six students");
+//        List<String> studentsNames = studentRepository.findAll()
+//                .stream()
+//                .map(student -> student.getName())
+//                .collect(Collectors.toList());
+
+//        System.out.println(studentsNames.get(0) + " 0");
+//        System.out.println(studentsNames.get(1) + " 1");
+
+        System.out.println(studentRepository.findAll().get(0).getName() + " 0");
+        System.out.println(studentRepository.findAll().get(1).getName() + " 1");
+
+        new Thread(() -> {
+            System.out.println(studentRepository.findAll().get(2).getName() + " 2");
+            System.out.println(studentRepository.findAll().get(3).getName() + " 3");
+//            System.out.println(studentsNames.get(2) + " 2");
+//            System.out.println(studentsNames.get(3) + " 3");
+        }).start();
+
+        new Thread(() -> {
+            System.out.println(studentRepository.findAll().get(4).getName() + " 4");
+            System.out.println(studentRepository.findAll().get(5).getName() + " 5");
+//            System.out.println(studentsNames.get(4) + " 4");
+//            System.out.println(studentsNames.get(5) + " 5");
+        }).start();
+    }
+
+    public void printStudent(List<String> students, int id) {
+        System.out.println(students.get(id));
+    }
 }

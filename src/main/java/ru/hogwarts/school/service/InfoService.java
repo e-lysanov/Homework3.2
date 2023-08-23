@@ -33,8 +33,6 @@ public class InfoService {
 //        long endTime = System.nanoTime();
 //        long timeElapsed = endTime - startTime;
 //        System.out.println(timeElapsed);
-
-
         return sum;
     }
 }
