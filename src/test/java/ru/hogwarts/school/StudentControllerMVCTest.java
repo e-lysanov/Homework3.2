@@ -18,6 +18,7 @@ import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.service.AvatarService;
 import ru.hogwarts.school.service.FacultyService;
+import ru.hogwarts.school.service.InfoService;
 import ru.hogwarts.school.service.StudentService;
 
 import java.util.ArrayList;
@@ -50,6 +51,9 @@ public class StudentControllerMVCTest {
 
     @SpyBean
     private FacultyService facultyService;
+
+    @SpyBean
+    private InfoService infoService;
 
     @InjectMocks
     private StudentController studentController;
@@ -232,6 +236,8 @@ public class StudentControllerMVCTest {
         student.setFaculty(faculty);
 
         when(studentRepository.getById(any(Long.class))).thenReturn(student);
+
+//        when(studentRepository.findById(any(Long.class))).thenReturn(Optional.of(student));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/student/getFacultyByID/" + id)) //send
